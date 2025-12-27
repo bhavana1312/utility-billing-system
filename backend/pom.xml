@@ -12,10 +12,10 @@
 
     <modules>
         <module>config-server</module>
-        <!-- <module>discovery-server</module>
+        <module>discovery-server</module>
         <module>api-gateway</module>
         <module>auth-service</module>
-        <module>consumer-service</module>
+        <!-- <module>consumer-service</module>
         <module>utility-service</module>
         <module>meter-service</module>
         <module>billing-service</module>
