@@ -1,5 +1,6 @@
 package com.utilitybilling.authservice.service;
 
+import com.utilitybilling.authservice.dto.ChangePasswordRequest;
 import com.utilitybilling.authservice.dto.ForgotPasswordRequest;
 import com.utilitybilling.authservice.dto.LoginRequest;
 import com.utilitybilling.authservice.dto.LoginResponse;
@@ -8,6 +9,7 @@ import com.utilitybilling.authservice.dto.RegisterResponse;
 import com.utilitybilling.authservice.dto.ResetPasswordRequest;
 import com.utilitybilling.authservice.exception.DuplicateUserException;
 import com.utilitybilling.authservice.exception.InvalidCredentialsException;
+import com.utilitybilling.authservice.exception.InvalidOldPasswordException;
 import com.utilitybilling.authservice.exception.InvalidResetTokenException;
 import com.utilitybilling.authservice.model.PasswordResetToken;
 import com.utilitybilling.authservice.model.Role;
@@ -114,7 +116,19 @@ public class AuthServiceImpl implements AuthService {
 	    tokenRepository.deleteByUserId(user.getId());
 	}
 
-	
+	@Override
+	public void changePassword(String username,ChangePasswordRequest request){
+
+	    User user=userRepository.findByUsername(username)
+	            .orElseThrow(()->new InvalidCredentialsException("User not found"));
+
+	    if(!passwordEncoder.matches(request.getOldPassword(),user.getPassword()))
+	        throw new InvalidOldPasswordException("Old password is incorrect");
+
+	    user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+	    userRepository.save(user);
+	}
+
 	
 
 }

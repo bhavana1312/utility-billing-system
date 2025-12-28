@@ -45,4 +45,11 @@ public class GlobalExceptionHandler{
                 .body(Map.of("error",ex.getMessage()));
     }
     
+    @ExceptionHandler(InvalidOldPasswordException.class)
+    public ResponseEntity<?> handleInvalidOldPassword(InvalidOldPasswordException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("error",ex.getMessage()));
+    }
+
+    
 }

@@ -1,5 +1,6 @@
 package com.utilitybilling.authservice.controller;
 
+import com.utilitybilling.authservice.dto.ChangePasswordRequest;
 import com.utilitybilling.authservice.dto.ForgotPasswordRequest;
 import com.utilitybilling.authservice.dto.LoginRequest;
 import com.utilitybilling.authservice.dto.LoginResponse;
@@ -14,6 +15,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -47,6 +49,16 @@ public class AuthController {
 	    authService.resetPassword(request);
 	    return ResponseEntity.ok(
 	            Map.of("message","Password reset successful"));
+	}
+	
+	@PutMapping("/change-password")
+	public ResponseEntity<?> changePassword(
+	        @AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails userDetails,
+	        @Valid @RequestBody ChangePasswordRequest request){
+
+	    authService.changePassword(userDetails.getUsername(),request);
+	    return ResponseEntity.ok(
+	            Map.of("message","Password updated successfully"));
 	}
 
 }
