@@ -39,9 +39,4 @@ public class GlobalExceptionHandler{
                 .body(Map.of("error",ex.getMessage()));
     }
     
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<String> handleAccessDenied(){
-        return ResponseEntity.status(HttpStatus.FORBIDDEN)
-            .body("Access denied");
-    }
 }
