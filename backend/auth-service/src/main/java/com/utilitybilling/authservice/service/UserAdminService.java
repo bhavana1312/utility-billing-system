@@ -1,10 +1,11 @@
 package com.utilitybilling.authservice.service;
 
-import com.utilitybilling.authservice.model.User;
 import java.util.List;
 
+import com.utilitybilling.authservice.dto.UserResponse;
+
 public interface UserAdminService{
-    List<User> getAllUsers();
-    User getUserById(String userId);
+    List<UserResponse> getAllUsers();
+    UserResponse getUserById(String userId);
     void deactivateUser(String userId);
 }
