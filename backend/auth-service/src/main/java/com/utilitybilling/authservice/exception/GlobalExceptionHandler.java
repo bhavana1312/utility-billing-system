@@ -39,4 +39,10 @@ public class GlobalExceptionHandler{
                 .body(Map.of("error",ex.getMessage()));
     }
     
+    @ExceptionHandler(InvalidResetTokenException.class)
+    public ResponseEntity<?> handleInvalidResetToken(InvalidResetTokenException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("error",ex.getMessage()));
+    }
+    
 }

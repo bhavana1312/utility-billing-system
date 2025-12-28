@@ -1,12 +1,17 @@
 package com.utilitybilling.authservice.controller;
 
+import com.utilitybilling.authservice.dto.ForgotPasswordRequest;
 import com.utilitybilling.authservice.dto.LoginRequest;
 import com.utilitybilling.authservice.dto.LoginResponse;
 import com.utilitybilling.authservice.dto.RegisterRequest;
 import com.utilitybilling.authservice.dto.RegisterResponse;
+import com.utilitybilling.authservice.dto.ResetPasswordRequest;
 import com.utilitybilling.authservice.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,4 +32,21 @@ public class AuthController {
 	public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
 		return ResponseEntity.ok(authService.login(request));
 	}
+	
+	@PostMapping("/forgot-password")
+	public ResponseEntity<?> forgotPassword(
+	        @Valid @RequestBody ForgotPasswordRequest request){
+	    authService.forgotPassword(request);
+	    return ResponseEntity.ok(
+	            Map.of("message","Password reset link sent to registered email"));
+	}
+
+	@PostMapping("/reset-password")
+	public ResponseEntity<?> resetPassword(
+	        @Valid @RequestBody ResetPasswordRequest request){
+	    authService.resetPassword(request);
+	    return ResponseEntity.ok(
+	            Map.of("message","Password reset successful"));
+	}
+
 }
